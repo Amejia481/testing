@@ -1,0 +1,14 @@
+<html>
+
+<script>
+      navigator.geolocation.getCurrentPosition(
+        () => console.log("location", "success"),
+        () => console.log("location", "erro")
+      );
+    var w = window.open(
+        location.href,
+        "Popup",
+        "resizable,scrollbars,status"
+      )
+</script>
+</html>
